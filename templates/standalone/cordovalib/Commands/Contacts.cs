@@ -536,7 +536,7 @@ namespace WP7CordovaClassLib.Cordova.Commands
             return retVal.TrimEnd(',');
         }
 
-        private string getFormattedJSONAddress(ContactAddress address, bool isPrefered)
+        private string getFormattedJSONAddress(ContactAddress address, bool isPreferred)
         {
 
             string addressFormatString = "\"pref\":{0}," + // bool
@@ -556,7 +556,7 @@ namespace WP7CordovaClassLib.Cordova.Commands
                                     + address.PhysicalAddress.PostalCode;
 
             string jsonAddress = string.Format(addressFormatString,
-                                               isPrefered ? "\"true\"" : "\"false\"",
+                                               isPreferred ? "\"true\"" : "\"false\"",
                                                address.Kind.ToString(),
                                                formattedAddress,
                                                address.PhysicalAddress.AddressLine1 + " " + address.PhysicalAddress.AddressLine2,
