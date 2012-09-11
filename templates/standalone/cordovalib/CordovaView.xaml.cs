@@ -57,7 +57,7 @@ namespace WP7CordovaClassLib
         private bool OverrideBackButton = false;
 
         /// <summary>
-        /// Sentinal to keep track of page changes as a result of the hardware back button
+        /// Sentinel to keep track of page changes as a result of the hardware back button
         /// Set to false when the back-button is pressed, which calls js window.history.back()
         /// If the page changes as a result of the back button the event is cancelled.
         /// </summary>
