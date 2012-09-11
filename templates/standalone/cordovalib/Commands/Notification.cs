@@ -31,7 +31,7 @@ namespace WP7CordovaClassLib.Cordova.Commands
         static ProgressBar progressBar = null;
         const int DEFAULT_DURATION = 5;
 
-        private NotificationBox notifBox;
+        private NotificationBox notifyBox;
 
         private PhoneApplicationPage Page
         {
@@ -103,15 +103,15 @@ namespace WP7CordovaClassLib.Cordova.Commands
                     Grid grid = page.FindName("LayoutRoot") as Grid;
                     if (grid != null)
                     {
-                        notifBox = new NotificationBox();
-                        notifBox.PageTitle.Text = alertOpts.title;
-                        notifBox.SubTitle.Text = alertOpts.message;
+                        notifyBox = new NotificationBox();
+                        notifyBox.PageTitle.Text = alertOpts.title;
+                        notifyBox.SubTitle.Text = alertOpts.message;
                         Button btnOK = new Button();
                         btnOK.Content = alertOpts.buttonLabel;
                         btnOK.Click += new RoutedEventHandler(btnOK_Click);
                         btnOK.Tag = 1;
-                        notifBox.ButtonPanel.Children.Add(btnOK);
-                        grid.Children.Add(notifBox);
+                        notifyBox.ButtonPanel.Children.Add(btnOK);
+                        grid.Children.Add(notifyBox);
                         page.BackKeyPress += page_BackKeyPress;
                     }
                 }
@@ -138,9 +138,9 @@ namespace WP7CordovaClassLib.Cordova.Commands
                     Grid grid = page.FindName("LayoutRoot") as Grid;
                     if (grid != null)
                     {
-                        notifBox = new NotificationBox();
-                        notifBox.PageTitle.Text = alertOpts.title;
-                        notifBox.SubTitle.Text = alertOpts.message;
+                        notifyBox = new NotificationBox();
+                        notifyBox.PageTitle.Text = alertOpts.title;
+                        notifyBox.SubTitle.Text = alertOpts.message;
 
                         string[] labels = alertOpts.buttonLabel.Split(',');
                         for (int n = 0; n < labels.Length; n++)
@@ -149,10 +149,10 @@ namespace WP7CordovaClassLib.Cordova.Commands
                             btn.Content = labels[n];
                             btn.Tag = n;
                             btn.Click += new RoutedEventHandler(btnOK_Click);
-                            notifBox.ButtonPanel.Children.Add(btn);
+                            notifyBox.ButtonPanel.Children.Add(btn);
                         }
 
-                        grid.Children.Add(notifBox);
+                        grid.Children.Add(notifyBox);
                         page.BackKeyPress += page_BackKeyPress;
                     }
                 }
@@ -166,14 +166,14 @@ namespace WP7CordovaClassLib.Cordova.Commands
         void page_BackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
         {
             PhoneApplicationPage page = sender as PhoneApplicationPage;
-            if (page != null && notifBox != null)
+            if (page != null && notifyBox != null)
             {
                 Grid grid = page.FindName("LayoutRoot") as Grid;
                 if (grid != null)
                 {
-                    grid.Children.Remove(notifBox);
+                    grid.Children.Remove(notifyBox);
                 }
-                notifBox = null;
+                notifyBox = null;
                 page.BackKeyPress -= page_BackKeyPress;
                 e.Cancel = true;
             }
@@ -189,7 +189,7 @@ namespace WP7CordovaClassLib.Cordova.Commands
             {
                 retVal = (int)btn.Tag + 1;
             }
-            if (notifBox != null)
+            if (notifyBox != null)
             {
                 PhoneApplicationPage page = Page;
                 if (page != null)
@@ -197,10 +197,10 @@ namespace WP7CordovaClassLib.Cordova.Commands
                     Grid grid = page.FindName("LayoutRoot") as Grid;
                     if (grid != null)
                     {
-                        grid.Children.Remove(notifBox);
+                        grid.Children.Remove(notifyBox);
                     }
                 }
-                notifBox = null;
+                notifyBox = null;
             }
             DispatchCommandResult(new PluginResult(PluginResult.Status.OK, retVal));
         }
