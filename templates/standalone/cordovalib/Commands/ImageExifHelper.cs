@@ -126,7 +126,7 @@ namespace WP7CordovaClassLib.Cordova.Commands
             // 0x????, 0x???? : Chars 'E','x','i','f'
             // 0x0000 : 2 empty bytes
             // <== mark beginning of tags SIZE:ID:VALUE
-            // 0x???? : 'II' or 'MM' for Intel or Motorola ( always getting II on my WP7 devices ), determins littleEndian-ness
+            // 0x???? : 'II' or 'MM' for Intel or Motorola ( always getting II on my WP7 devices ), determines littleEndian-ness
             // 0x002A : marker value
             // 0x???? : offset to the Image File Data
 
