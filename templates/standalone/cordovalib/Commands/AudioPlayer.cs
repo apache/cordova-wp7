@@ -544,7 +544,7 @@ namespace WP7CordovaClassLib.Cordova.Commands
             // Subchunk1ID Contains the letters "fmt " (0x666d7420 big-endian form).
             stream.Write(encoding.GetBytes("fmt "), 0, 4);
 
-            // Subchunk1Size 16 for PCM.  This is the size of therest of the Subchunk which follows this number.
+            // Subchunk1Size 16 for PCM.  This is the size of the rest of the Subchunk which follows this number.
             stream.Write(BitConverter.GetBytes(16), 0, 4);
 
             // AudioFormat PCM = 1 (i.e. Linear quantization) Values other than 1 indicate some form of compression.
