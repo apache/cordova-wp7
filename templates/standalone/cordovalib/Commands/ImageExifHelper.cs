@@ -134,7 +134,7 @@ namespace WP7CordovaClassLib.Cordova.Commands
 
             // 0x???? number of exif tags present
 
-            // make sure we are at the begining
+            // make sure we are at the beginning
             imgStream.Seek(0, SeekOrigin.Begin);
             BinaryReader reader = new BinaryReader(imgStream);
 
