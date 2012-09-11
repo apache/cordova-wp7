@@ -238,7 +238,7 @@ namespace WP7CordovaClassLib.Cordova.Commands
             DispatchCommandResult();
         }
 
-        // Display an inderminate progress indicator
+        // Display an indeterminate progress indicator
         public void activityStart(string unused)
         {
 
@@ -272,7 +272,7 @@ namespace WP7CordovaClassLib.Cordova.Commands
         }
 
 
-        // Remove our inderminate progress indicator
+        // Remove our indeterminate progress indicator
         public void activityStop(string unused)
         {
             Deployment.Current.Dispatcher.BeginInvoke(() =>
