@@ -379,7 +379,8 @@ namespace WP7CordovaClassLib
         {
             this.PageDidChange = true;
             // Debug.WriteLine("GapBrowser_Navigating to :: " + e.Uri.ToString());
-            // TODO: tell any running plugins to stop doing what they are doing.
+            this.nativeExecution.ResetAllCommands();
+
             // TODO: check whitelist / blacklist
             // NOTE: Navigation can be cancelled by setting :        e.Cancel = true;
         }

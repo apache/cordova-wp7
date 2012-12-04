@@ -100,5 +100,13 @@ namespace WP7CordovaClassLib.Cordova
 
             return commandMap[service];
         }
+
+        public static void ResetAllCommands()
+        {
+            foreach (BaseCommand bc in commandMap.Values)
+            {
+                bc.OnReset();
+            }
+        }
     }
 }

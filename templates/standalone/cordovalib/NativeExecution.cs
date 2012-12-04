@@ -56,6 +56,11 @@ namespace WP7CordovaClassLib.Cordova
             return Microsoft.Devices.Environment.DeviceType == DeviceType.Emulator;
         }
 
+        public void ResetAllCommands()
+        {
+            CommandFactory.ResetAllCommands();
+        }
+
         /// <summary>
         /// Executes command and returns result back.
         /// </summary>
