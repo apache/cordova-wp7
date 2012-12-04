@@ -17,10 +17,10 @@ using System.Diagnostics;
 using System.Threading;
 using Microsoft.Devices;
 using Microsoft.Phone.Controls;
-using WP7CordovaClassLib.Cordova.Commands;
+using WPCordovaClassLib.Cordova.Commands;
 using System.Windows;
 
-namespace WP7CordovaClassLib.Cordova
+namespace WPCordovaClassLib.Cordova
 {
     /// <summary>
     /// Implements logic to execute native command and return result back.
