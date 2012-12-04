@@ -31,17 +31,17 @@ using System.Runtime.Serialization.Json;
 using System.IO;
 using System.ComponentModel;
 using System.Xml.Linq;
-using WP7CordovaClassLib.Cordova.Commands;
+using WPCordovaClassLib.Cordova.Commands;
 using System.Diagnostics;
 using System.Text;
-using WP7CordovaClassLib.Cordova;
+using WPCordovaClassLib.Cordova;
 using System.Threading;
 using Microsoft.Phone.Shell;
-using WP7CordovaClassLib.Cordova.JSON;
+using WPCordovaClassLib.Cordova.JSON;
 
 
 
-namespace WP7CordovaClassLib
+namespace WPCordovaClassLib
 {
     public partial class CordovaView : UserControl
     {
