@@ -74,7 +74,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Xml" />
-    <Reference Include="WP7CordovaClassLib, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="WPCordovaClassLib, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -96,6 +96,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CordovaLib\WPCordovaClassLib.dll" />
     <Content Include="CordovaSourceDictionary.xml" />
     <Content Include="www\cordova-2.3.0.js" />
     <Content Include="www\img\logo.png" />
@@ -130,7 +131,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CordovaLib\" />
     <Folder Include="Plugins\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
