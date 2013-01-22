@@ -98,6 +98,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="config.xml" />
     <Content Include="CordovaLib\WPCordovaClassLib.dll" />
     <Content Include="CordovaSourceDictionary.xml" />
     <Content Include="www\cordova-2.4.0.js" />
