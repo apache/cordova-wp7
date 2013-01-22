@@ -96,6 +96,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="config.xml" />
     <Content Include="CordovaSourceDictionary.xml">
       <SubType>Designer</SubType>
     </Content>
