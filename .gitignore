@@ -41,6 +41,8 @@ httpd.parse.errors
 test/MobileSpecUnitTests/CordovaSourceDictionary.xml
 example/CordovaSourceDictionary.xml
 templates/standalone/CordovaSourceDictionary.xml
+templates/standalone/VERSION
+templates/full/VERSION
 
 
 
