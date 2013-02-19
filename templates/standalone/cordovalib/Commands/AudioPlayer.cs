@@ -523,6 +523,7 @@ namespace WPCordovaClassLib.Cordova.Commands
             }
         }    
 
+
         #region Xna loop
         /// <summary>
         /// Special initialization required for the microphone: XNA game loop
