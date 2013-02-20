@@ -1,8 +1,8 @@
 ﻿// Platform: windowsphone
 
-// commit cded0ad0826489ca07ae8bdd33905a37d40f3adf
+// commit 521bbd64ed729ca76b6646d25bb01b76ee8a54b5
 
-// File generated at :: Wed Feb 20 2013 12:30:34 GMT-0800 (Pacific Standard Time)
+// File generated at :: Wed Feb 20 2013 13:57:19 GMT-0800 (Pacific Standard Time)
 
 /*
  Licensed to the Apache Software Foundation (ASF) under one
@@ -934,23 +934,53 @@ define("cordova/platform", function(require, exports, module) {
 var cordova = require('cordova'),
       exec = require('cordova/exec');
 
+// specifically require the following patches :
+
+// localStorage+SessionStorage APIs
+require("cordova/plugin/windowsphone/DOMStorage");
+
+// Fix XHR calls to local file-system
+require("cordova/plugin/windowsphone/XHRPatch");
+
+
 module.exports = {
     id: "windowsphone",
     initialize:function() {
         var modulemapper = require('cordova/modulemapper');
 
-        modulemapper.loadMatchingModules(/cordova.*\/plugininit$/);
-
         modulemapper.loadMatchingModules(/cordova.*\/symbols$/);
-        modulemapper.clobbers('/cordova/plugin/windowsphone/CordovaCommandResult', 'CordovaCommandResult');
-
         modulemapper.mapModules(window);
+
+        window.alert = window.alert || require("cordova/plugin/notification").alert;
+        window.confirm = window.confirm || require("cordova/plugin/notification").confirm;
 
         // Inject a listener for the backbutton, and tell native to override the flag (true/false) when we have 1 or more, or 0, listeners
         var backButtonChannel = cordova.addDocumentEventHandler('backbutton');
         backButtonChannel.onHasSubscribersChange = function() {
             exec(null, null, "CoreEvents", "overridebackbutton", [this.numHandlers == 1]);
         };
+    },
+    clobbers: {
+        CordovaCommandResult: {
+            path:"cordova/plugin/windowsphone/CordovaCommandResult"
+        },
+        navigator: {
+            children: {
+                console: {
+                    path: "cordova/plugin/windowsphone/console"
+
+                }
+            }
+        },
+        console:{
+          path: "cordova/plugin/windowsphone/console"
+        },
+        FileTransfer: {
+            path: 'cordova/plugin/windowsphone/FileTransfer'
+        },
+        open : {
+            path: 'cordova/plugin/InAppBrowser'
+        }
     }
 };
 
@@ -4200,6 +4230,7 @@ var modulemapper = require('cordova/modulemapper'),
 symbolshelper(modulemapper.defaults);
 modulemapper.clobbers('cordova/plugin/File', 'File');
 modulemapper.clobbers('cordova/plugin/FileReader', 'FileReader');
+modulemapper.clobbers('cordova/plugin/windowsphone/FileTransfer', 'FileTransfer');
 
 });
 
@@ -4835,16 +4866,6 @@ modulemapper.clobbers('cordova/plugin/GlobalizationError', 'GlobalizationError')
 
 });
 
-// file: lib\windowsphone\plugin\inappbrowser\symbols.js
-define("cordova/plugin/inappbrowser/symbols", function(require, exports, module) {
-
-
-var modulemapper = require('cordova/modulemapper');
-
-modulemapper.clobbers('cordova/plugin/InAppBrowser', 'open');
-
-});
-
 // file: lib\common\plugin\logger.js
 define("cordova/plugin/logger", function(require, exports, module) {
 
@@ -5456,8 +5477,8 @@ module.exports = function(args) {
 
 });
 
-// file: lib\windowsphone\plugin\windowsphone\DOMStorage\plugininit.js
-define("cordova/plugin/windowsphone/DOMStorage/plugininit", function(require, exports, module) {
+// file: lib\windowsphone\plugin\windowsphone\DOMStorage.js
+define("cordova/plugin/windowsphone/DOMStorage", function(require, exports, module) {
 
 (function(win,doc) {
 
@@ -5781,8 +5802,8 @@ module.exports = FileUploadOptions;
 
 });
 
-// file: lib\windowsphone\plugin\windowsphone\XHRPatch\plugininit.js
-define("cordova/plugin/windowsphone/XHRPatch/plugininit", function(require, exports, module) {
+// file: lib\windowsphone\plugin\windowsphone\XHRPatch.js
+define("cordova/plugin/windowsphone/XHRPatch", function(require, exports, module) {
 
 // TODO: the build process will implicitly wrap this in a define() call
 // with a closure of its own; do you need this extra closure?
@@ -6048,26 +6069,6 @@ window.onerror = function(msg,fileName,line) {
 };
 
 module.exports = debugConsole;
-
-});
-
-// file: lib\windowsphone\plugin\windowsphone\console\symbols.js
-define("cordova/plugin/windowsphone/console/symbols", function(require, exports, module) {
-
-
-var modulemapper = require('cordova/modulemapper');
-
-modulemapper.clobbers('cordova/plugin/windowsphone/console', 'navigator.console');
-modulemapper.clobbers('cordova/plugin/windowsphone/console', 'console');
-
-});
-
-// file: lib\windowsphone\plugin\windowsphone\notification\plugininit.js
-define("cordova/plugin/windowsphone/notification/plugininit", function(require, exports, module) {
-
-window.alert = window.alert || require("cordova/plugin/notification").alert;
-window.confirm = window.confirm || require("cordova/plugin/notification").confirm;
-
 
 });
 
@@ -6351,7 +6352,12 @@ window.cordova = require('cordova');
                  * Create all cordova objects once page has fully loaded and native side is ready.
                  */
                 channel.join(function() {
-                    var platform = require('cordova/platform');
+                    var builder = require('cordova/builder'),
+                        platform = require('cordova/platform');
+
+                    builder.buildIntoButDoNotClobber(platform.defaults, context);
+                    builder.buildIntoAndClobber(platform.clobbers, context);
+                    builder.buildIntoAndMerge(platform.merges, context);
 
                     // Call the platform-specific initialization
                     platform.initialize();
