@@ -161,7 +161,7 @@ namespace WPCordovaClassLib
 
         void AppClosing(object sender, ClosingEventArgs e)
         {
-            Debug.WriteLine("AppClosing");
+            //Debug.WriteLine("AppClosing");
         }
 
         void AppDeactivated(object sender, DeactivatedEventArgs e)
@@ -170,7 +170,7 @@ namespace WPCordovaClassLib
 
             try
             {
-                CordovaBrowser.InvokeScript("CordovaCommandResult", new string[] { "pause" });
+                CordovaBrowser.InvokeScript("eval", new string[] { "cordova.fireDocumentEvent('pause');" });
             }
             catch (Exception)
             {
@@ -180,7 +180,7 @@ namespace WPCordovaClassLib
 
         void AppLaunching(object sender, LaunchingEventArgs e)
         {
-            Debug.WriteLine("INFO: AppLaunching");
+            //Debug.WriteLine("INFO: AppLaunching");
         }
 
         void AppActivated(object sender, Microsoft.Phone.Shell.ActivatedEventArgs e)
@@ -188,7 +188,7 @@ namespace WPCordovaClassLib
             Debug.WriteLine("INFO: AppActivated");
             try
             {
-                CordovaBrowser.InvokeScript("CordovaCommandResult", new string[] { "resume" });
+                CordovaBrowser.InvokeScript("eval", new string[] { "cordova.fireDocumentEvent('resume');" });
             }
             catch (Exception)
             {
@@ -332,7 +332,7 @@ namespace WPCordovaClassLib
             {
                 try
                 {
-                    CordovaBrowser.InvokeScript("CordovaCommandResult", new string[] { "backbutton" });
+                    CordovaBrowser.InvokeScript("eval", new string[] { "cordova.fireDocumentEvent('backbutton');" });
                     e.Cancel = true;
                 }
                 catch (Exception ex)
