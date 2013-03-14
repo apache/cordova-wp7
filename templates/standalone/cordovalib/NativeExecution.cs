@@ -108,7 +108,7 @@ namespace WPCordovaClassLib.Cordova
 
                 bc.OnCustomScript += OnCustomScriptHandler;
 
-                ThreadStart methodInvokation = () =>
+                ThreadStart methodInvocation = () =>
                 {
 
                     try
@@ -133,11 +133,11 @@ namespace WPCordovaClassLib.Cordova
                 {
                     // Due to some issues with the IsolatedStorage in current version of WP8 SDK we have to run all File Api commands synchronously.
                     // TODO: test this in WP8 RTM
-                    methodInvokation.Invoke();
+                    methodInvocation.Invoke();
                 }
                 else
                 {
-                    new Thread(methodInvokation).Start();
+                    new Thread(methodInvocation).Start();
                 }
 
                     
