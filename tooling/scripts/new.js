@@ -75,11 +75,6 @@ function read(filename) {
 function exec(command) {
     var oShell=wscript_shell.Exec(command);
     while (oShell.Status == 0) {
-        if(!oShell.StdOut.AtEndOfStream) {
-            var line = oShell.StdOut.ReadLine();
-            // XXX: Change to verbose mode
-            // WScript.StdOut.WriteLine(line);
-        }
         WScript.sleep(100);
     }
 }
@@ -91,17 +86,17 @@ function copy_to(path)
     WScript.StdOut.WriteLine("Copying files to build directory...");
 
     /** copy by file instead? (just what we need)**/
-    dest.CopyHere(ROOT + "\\bin");
-    dest.CopyHere(ROOT + EXAMPLE_PATH);      //Should mostly be copied from standalone
-    dest.CopyHere(ROOT + FRAMEWORK_PATH);
-    dest.CopyHere(ROOT + TEMPLATES_PATH);
-    dest.CopyHere(ROOT + "\\tests");
-    dest.CopyHere(ROOT + "\\tooling");
-    dest.CopyHere(ROOT + "\\.gitignore");
-    dest.CopyHere(ROOT + "\\LICENSE");
-    dest.CopyHere(ROOT + "\\NOTICE");
-    dest.CopyHere(ROOT + "\\README.md");
-    dest.CopyHere(ROOT + "\\VERSION");
+    dest.CopyHere(ROOT + "\\bin", 4|20);
+    dest.CopyHere(ROOT + EXAMPLE_PATH, 4|20);      //Should mostly be copied from standalone
+    dest.CopyHere(ROOT + FRAMEWORK_PATH, 4|20);
+    dest.CopyHere(ROOT + TEMPLATES_PATH, 4|20);
+    dest.CopyHere(ROOT + "\\tests", 4|20);
+    dest.CopyHere(ROOT + "\\tooling", 4|20);
+    dest.CopyHere(ROOT + "\\.gitignore", 4|20);
+    dest.CopyHere(ROOT + "\\LICENSE", 4|20);
+    dest.CopyHere(ROOT + "\\NOTICE", 4|20);
+    dest.CopyHere(ROOT + "\\README.md", 4|20);
+    dest.CopyHere(ROOT + "\\VERSION", 4|20);
 }
 
 WScript.StdOut.WriteLine("");
