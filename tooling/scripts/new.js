@@ -33,14 +33,14 @@ var args = WScript.Arguments,
     //Sub folder containing framework
     FRAMEWORK_PATH = '\\framework',
     //Subfolder containing example project
-    EXAMPLE_PATH = '\\example';
+    EXAMPLE_PATH = '\\example',
+    CORDOVA_WP7 = 'https://git-wip-us.apache.org/repos/asf/cordova-wp7.git';
+
 
 //Destination to build to
 var BUILD_DESTINATION;
 // pull the project down from github?
 var GET_NEW = false;
-//Add templates to visual studio?
-var ADD_TO_VS = false;
 
 // help function
 function Usage()
@@ -65,7 +65,7 @@ function read(filename) {
     }
     else
     {
-        WScript.StdOut.WriteLine('Cannot read non-existant file : ' + filename);
+        WScript.StdErr.WriteLine('Cannot read non-existant file : ' + filename);
         WScript.Quit(1);
     }
     return null;
@@ -110,7 +110,7 @@ if(args.Count() > 0)
 {
     if(fso.FolderExists(args(0)))
     {
-        WScript.StdOut.WriteLine("The given directory already exists!");
+        WScript.StdErr.WriteLine("The given directory already exists!");
         Usage();
         WScript.Quit(1);
     }
@@ -124,7 +124,7 @@ if(args.Count() > 0)
 
         if(fso.FolderExists(BUILD_DESTINATION))
         {
-            WScript.StdOut.WriteLine("The given directory already exists!");
+            WScript.StdErr.WriteLine("The given directory already exists!");
             Usage();
             WScript.Quit(1);
         }
@@ -140,15 +140,13 @@ if(args.Count() > 0)
     }
     else
     {
-        var CORDOVA_WP7 = 'git://github.com/apache/cordova-wp7.git';
-
         wscript_shell.CurrentDirectory = arg(0) + '\\..';
         BUILD_DESTINATION = wscript_shell.CurrentDirectory + '\\cordova-wp7';
 
         WScript.StdOut.WriteLine('Cloning cordova-wp7 from git, build destination now ' + BUILD_DESTINATION);
         if(fso.FolderExists(BUILD_DESTINATION))
         {
-            WScript.StdOut.WriteLine("Could not clone cordova-wp7 from git because it's directory already exists!");
+            WScript.StdErr.WriteLine("Could not clone cordova-wp7 from git because it's directory already exists!");
             WScript.Quit(1);
         }
 
