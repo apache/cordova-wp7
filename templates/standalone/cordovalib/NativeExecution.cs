@@ -145,7 +145,7 @@ namespace WPCordovaClassLib.Cordova
             catch (Exception ex)
             {
                 // ERROR
-                Debug.WriteLine(String.Format("ERROR: Unable to execute command :: {0}:{1}:{3} ",
+                Debug.WriteLine(String.Format("ERROR: Unable to execute command :: {0}:{1}:{2} ",
                     commandCallParams.Service, commandCallParams.Action, ex.Message));
 
                 this.OnCommandResult(commandCallParams.CallbackId, new PluginResult(PluginResult.Status.ERROR));
