@@ -36,6 +36,8 @@ httpd.parse.errors
 # Exclude ALL DLLs? 
 *.dll
 
+*.zip
+
 *.DS_Store
 
 test/MobileSpecUnitTests/CordovaSourceDictionary.xml
