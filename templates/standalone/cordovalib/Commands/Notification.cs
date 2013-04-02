@@ -94,10 +94,11 @@ namespace WPCordovaClassLib.Cordova.Commands
                 if (page != null)
                 {
                     Grid grid = page.FindName("LayoutRoot") as Grid;
-                    bool wasNull = notifyBox == null;
                     if (grid != null)
                     {
+                        var previous = notifyBox;
                         notifyBox = new NotificationBox();
+                        notifyBox.Tag = previous;
                         notifyBox.PageTitle.Text = alertOpts.title;
                         notifyBox.SubTitle.Text = alertOpts.message;
                         Button btnOK = new Button();
@@ -107,7 +108,7 @@ namespace WPCordovaClassLib.Cordova.Commands
                         notifyBox.ButtonPanel.Children.Add(btnOK);
                         grid.Children.Add(notifyBox);
 
-                        if (wasNull)
+                        if (previous == null)
                         {
                             page.BackKeyPress += page_BackKeyPress;
                         }
@@ -136,7 +137,9 @@ namespace WPCordovaClassLib.Cordova.Commands
                     Grid grid = page.FindName("LayoutRoot") as Grid;
                     if (grid != null)
                     {
+                        var previous = notifyBox;
                         notifyBox = new NotificationBox();
+                        notifyBox.Tag = previous; 
                         notifyBox.PageTitle.Text = alertOpts.title;
                         notifyBox.SubTitle.Text = alertOpts.message;
 
@@ -151,7 +154,10 @@ namespace WPCordovaClassLib.Cordova.Commands
                         }
 
                         grid.Children.Add(notifyBox);
-                        page.BackKeyPress += page_BackKeyPress;
+                        if (previous == null)
+                        {
+                            page.BackKeyPress += page_BackKeyPress;
+                        }
                     }
                 }
                 else
@@ -171,18 +177,7 @@ namespace WPCordovaClassLib.Cordova.Commands
                 if (grid != null)
                 {
                     grid.Children.Remove(notifyBox);
-                    notifyBox = null;
-                }
-                if (grid.Children.Count > 0)
-                {
-                    foreach (UIElement elem in grid.Children)
-                    {
-                        if (elem is NotificationBox)
-                        {
-                            notifyBox = elem as NotificationBox;
-                            break;
-                        }
-                    }
+                    notifyBox = notifyBox.Tag as NotificationBox;
                 }
                 if (notifyBox == null)
                 {
@@ -205,7 +200,7 @@ namespace WPCordovaClassLib.Cordova.Commands
 
                 notifBoxParent = btn.Parent as FrameworkElement;
                 while ((notifBoxParent = notifBoxParent.Parent as FrameworkElement) != null &&
-                       !(notifBoxParent is NotificationBox)) ;
+                       !(notifBoxParent is NotificationBox));
             }
             if (notifBoxParent != null)
             {
@@ -217,18 +212,7 @@ namespace WPCordovaClassLib.Cordova.Commands
                     {
                         grid.Children.Remove(notifBoxParent);
                     }
-                    notifyBox = null;
-                    if (grid.Children.Count > 0)
-                    {
-                        foreach (UIElement elem in grid.Children)
-                        {
-                            if (elem is NotificationBox)
-                            {
-                                notifyBox = elem as NotificationBox;
-                                break;
-                            }
-                        }
-                    }
+                    notifyBox = notifBoxParent.Tag as NotificationBox;
                     if (notifyBox == null)
                     {
                         page.BackKeyPress -= page_BackKeyPress;
