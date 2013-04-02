@@ -23,6 +23,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Xna.Framework.Audio;
 using WPCordovaClassLib.Cordova.UI;
 
+
 namespace WPCordovaClassLib.Cordova.Commands
 {
     public class Notification : BaseCommand
@@ -83,7 +84,6 @@ namespace WPCordovaClassLib.Cordova.Commands
         {
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
-
                 string[] args = JSON.JsonHelper.Deserialize<string[]>(options);
                 AlertOptions alertOpts = new AlertOptions();
                 alertOpts.message = args[0];
@@ -94,6 +94,7 @@ namespace WPCordovaClassLib.Cordova.Commands
                 if (page != null)
                 {
                     Grid grid = page.FindName("LayoutRoot") as Grid;
+                    bool wasNull = notifyBox == null;
                     if (grid != null)
                     {
                         notifyBox = new NotificationBox();
@@ -105,7 +106,11 @@ namespace WPCordovaClassLib.Cordova.Commands
                         btnOK.Tag = 1;
                         notifyBox.ButtonPanel.Children.Add(btnOK);
                         grid.Children.Add(notifyBox);
-                        page.BackKeyPress += page_BackKeyPress;
+
+                        if (wasNull)
+                        {
+                            page.BackKeyPress += page_BackKeyPress;
+                        }
                     }
                 }
                 else
@@ -159,15 +164,30 @@ namespace WPCordovaClassLib.Cordova.Commands
         void page_BackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
         {
             PhoneApplicationPage page = sender as PhoneApplicationPage;
+
             if (page != null && notifyBox != null)
             {
                 Grid grid = page.FindName("LayoutRoot") as Grid;
                 if (grid != null)
                 {
                     grid.Children.Remove(notifyBox);
+                    notifyBox = null;
                 }
-                notifyBox = null;
-                page.BackKeyPress -= page_BackKeyPress;
+                if (grid.Children.Count > 0)
+                {
+                    foreach (UIElement elem in grid.Children)
+                    {
+                        if (elem is NotificationBox)
+                        {
+                            notifyBox = elem as NotificationBox;
+                            break;
+                        }
+                    }
+                }
+                if (notifyBox == null)
+                {
+                    page.BackKeyPress -= page_BackKeyPress;
+                }
                 e.Cancel = true;
             }
 
@@ -177,12 +197,17 @@ namespace WPCordovaClassLib.Cordova.Commands
         void btnOK_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
+            FrameworkElement notifBoxParent = null;
             int retVal = 0;
             if (btn != null)
             {
                 retVal = (int)btn.Tag + 1;
+
+                notifBoxParent = btn.Parent as FrameworkElement;
+                while ((notifBoxParent = notifBoxParent.Parent as FrameworkElement) != null &&
+                       !(notifBoxParent is NotificationBox)) ;
             }
-            if (notifyBox != null)
+            if (notifBoxParent != null)
             {
                 PhoneApplicationPage page = Page;
                 if (page != null)
@@ -190,10 +215,26 @@ namespace WPCordovaClassLib.Cordova.Commands
                     Grid grid = page.FindName("LayoutRoot") as Grid;
                     if (grid != null)
                     {
-                        grid.Children.Remove(notifyBox);
+                        grid.Children.Remove(notifBoxParent);
+                    }
+                    notifyBox = null;
+                    if (grid.Children.Count > 0)
+                    {
+                        foreach (UIElement elem in grid.Children)
+                        {
+                            if (elem is NotificationBox)
+                            {
+                                notifyBox = elem as NotificationBox;
+                                break;
+                            }
+                        }
+                    }
+                    if (notifyBox == null)
+                    {
+                        page.BackKeyPress -= page_BackKeyPress;
                     }
                 }
-                notifyBox = null;
+                
             }
             DispatchCommandResult(new PluginResult(PluginResult.Status.OK, retVal));
         }
