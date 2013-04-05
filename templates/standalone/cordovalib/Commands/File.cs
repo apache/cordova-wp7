@@ -1078,7 +1078,7 @@ namespace WPCordovaClassLib.Cordova.Commands
 
             if (uri != null)
             {
-                // a single '/' is valid, however, '/someDir' is not, but '/tmp//somedir' is valid
+                // a single '/' is valid, however, '/someDir' is not, but '/tmp//somedir' and '///someDir' are valid
                 if (uri.StartsWith("/") && uri.IndexOf("//") < 0 && uri != "/")
                 {
                      Debug.WriteLine("Starts with / ::: " + uri);
