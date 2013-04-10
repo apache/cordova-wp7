@@ -31,8 +31,8 @@ function Usage() {
     Log("");
     Log("Usage: build [ --debug | --release ]");
     Log("    --help    : Displays this dialog.");
-    Log("    --debug   : Builds project in debug mode.");
-    Log("    --release : Builds project in release mode.");
+    Log("    --debug   : Cleans and builds project in debug mode.");
+    Log("    --release : Cleans and builds project in release mode.");
     Log("examples:");
     Log("    build ");
     Log("    build --debug");
@@ -67,7 +67,7 @@ function exec_verbose(command) {
     if (!oShell.StdErr.AtEndOfStream) {
         var line = oShell.StdErr.ReadAll();
         Log(line, true);
-        WScript.Quit(1);
+        WScript.Quit(2);
     }
 }
 
@@ -87,7 +87,7 @@ function is_cordova_project(path) {
 
 // builds the project and .xap in release mode
 function build_xap_release(path) {
-    Log("Building Cordova-WP7 Project:");
+    Log("Building Cordova-WP8 Project:");
     Log("\tConfiguration : Release");
     Log("\tDirectory : " + path);
     
@@ -105,13 +105,13 @@ function build_xap_release(path) {
             }
         }
     }
-    Log('ERROR: MSBuild failed to create .xap when building cordova-wp7 for release.', true);
-    WScript.Quit(1);
+    Log('ERROR: MSBuild failed to create .xap when building cordova-wp8 for release.', true);
+    WScript.Quit(2);
 }
 
 // builds the project and .xap in debug mode
 function build_xap_debug(path) {
-    Log("Building Cordova-WP7 Project:");
+    Log("Building Cordova-WP8 Project:");
     Log("\tConfiguration : Debug");
     Log("\tDirectory : " + path);
     
@@ -129,8 +129,8 @@ function build_xap_debug(path) {
             }
         }
     }
-    Log('ERROR: MSBuild failed to create .xap when building cordova-wp7 for debugging.', true);
-    WScript.Quit(1);
+    Log('ERROR: MSBuild failed to create .xap when building cordova-wp8 for debugging.', true);
+    WScript.Quit(2);
 }
 
 
@@ -141,42 +141,38 @@ if (args.Count() > 0) {
     if (args(0) == "--help" || args(0) == "/?" ||
             args(0) == "help" || args(0) == "-help" || args(0) == "/help") {
         Usage();
-        WScript.Quit(1);
+        WScript.Quit(2);
     }
     else if (args.Count() > 1) {
         Log("Error: Too many arguments.", true);
         Usage();
-        WScript.Quit(1);
+        WScript.Quit(2);
     }
     else if (fso.FolderExists(ROOT)) {
         if (!is_cordova_project(ROOT)) {
             Log('Error: .csproj file not found in ' + ROOT, true);
             Log('could not build project.', true);
-            WScript.Quit(1);
+            WScript.Quit(2);
         }
 
         if (args(0) == "--debug" || args(0) == "-d") {
-            if (fso.FolderExists(ROOT + '\\Bin\\Debug')) {
-                exec_verbose('%comspec% /c ' + ROOT + '\\cordova\\clean --debug');
-            }
+            exec_verbose('%comspec% /c ' + ROOT + '\\cordova\\clean');
             build_xap_debug(ROOT);
         }
         else if (args(0) == "--release" || args(0) == "-r") {
-            if (fso.FolderExists(ROOT + '\\Bin\\Release')) {
-                exec_verbose('%comspec% /c ' + ROOT + '\\cordova\\clean --release');
-            }
+            exec_verbose('%comspec% /c ' + ROOT + '\\cordova\\clean');
             build_xap_release(ROOT);
         }
         else {
-            Log("Error: \"" + arg(0) + "\" is not recognized as a build option", true);
+            Log("Error: \"" + args(0) + "\" is not recognized as a build option", true);
             Usage();
-            WScript.Quit(1);
+            WScript.Quit(2);
         }
     }
     else {
         Log("Error: Project directory not found,", true);
         Usage();
-        WScript.Quit(1);
+        WScript.Quit(2);
     }
 }
 else {
