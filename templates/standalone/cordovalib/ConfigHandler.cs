@@ -178,7 +178,7 @@ namespace WPCordovaClassLib.CordovaLib
 
             foreach (var plugin in plugins)
             {
-                Debug.WriteLine("plugin " + plugin.name);
+                Debug.WriteLine("Warning: Deprecated use of <plugin> by plugin : " + plugin.name);
                 PluginConfig pConfig = new PluginConfig(plugin.name, plugin.autoLoad != null && plugin.autoLoad.Value == "true");
                 if (pConfig.Name == "*")
                 {
