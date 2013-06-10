@@ -207,14 +207,26 @@ function create(path, namespace, name) {
     //clean up any Bin/obj or other generated files
     exec('cscript ' + path + '\\cordova\\lib\\clean.js //nologo');
 
+    // delete any .user and .sou files if any
+    if (fso.FolderExists(path)) {
+        var proj_folder = fso.GetFolder(path);
+        var proj_files = new Enumerator(proj_folder.Files);
+        for (;!proj_files.atEnd(); proj_files.moveNext()) {
+            if (fso.GetExtensionName(proj_files.item()) == 'user') {
+                fso.DeleteFile(proj_files.item());
+            } else if (fso.GetExtensionName(proj_files.item()) == 'sou') {
+                fso.DeleteFile(proj_files.item());
+            }
+        }
+    }
+
     Log("CREATE SUCCESS : " + path);
 
-    // TODO: Name the project according to the arguments
-    // update the solution to include the new project by name
-    // version BS
-    // index.html title set to project name ?
-
+    // TODO:
+    // index.html title set to project name?
 }
+
+
 
 if (args.Count() > 0) {
     // support help flags
