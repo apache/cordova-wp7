@@ -251,7 +251,13 @@ namespace WPCordovaClassLib.Cordova.UI
                 return new AudioResult(TaskResult.Cancel);
             }
 
-            this.memoryStream.UpdateWavStream();
+            //this.memoryStream.UpdateWavStream();
+            long position = memoryStream.Position;
+            memoryStream.Seek(4, SeekOrigin.Begin);
+            memoryStream.Write(BitConverter.GetBytes((int)memoryStream.Length - 8), 0, 4);
+            memoryStream.Seek(40, SeekOrigin.Begin);
+            memoryStream.Write(BitConverter.GetBytes((int)memoryStream.Length - 44), 0, 4);
+            memoryStream.Seek(position, SeekOrigin.Begin);
 
             // save audio data to local isolated storage
 
