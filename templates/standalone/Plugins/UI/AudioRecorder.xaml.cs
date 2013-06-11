@@ -122,8 +122,25 @@ namespace WPCordovaClassLib.Cordova.UI
             this.buffer = new byte[microphone.GetSampleSizeInBytes(this.microphone.BufferDuration)];
             this.microphone.BufferReady += new EventHandler<EventArgs>(MicrophoneBufferReady);
 
-            this.memoryStream = new MemoryStream();
-            this.memoryStream.InitializeWavStream(this.microphone.SampleRate);
+            MemoryStream stream = new MemoryStream();
+            this.memoryStream = stream;
+            int numBits = 16;
+            int numBytes = numBits / 8;
+
+            // inline version from AudioFormatsHelper
+            stream.Write(System.Text.Encoding.UTF8.GetBytes("RIFF"), 0, 4);
+            stream.Write(BitConverter.GetBytes(0), 0, 4);
+            stream.Write(System.Text.Encoding.UTF8.GetBytes("WAVE"), 0, 4);
+            stream.Write(System.Text.Encoding.UTF8.GetBytes("fmt "), 0, 4);
+            stream.Write(BitConverter.GetBytes(16), 0, 4);
+            stream.Write(BitConverter.GetBytes((short)1), 0, 2);
+            stream.Write(BitConverter.GetBytes((short)1), 0, 2);
+            stream.Write(BitConverter.GetBytes(this.microphone.SampleRate), 0, 4);
+            stream.Write(BitConverter.GetBytes(this.microphone.SampleRate * numBytes), 0, 4);
+            stream.Write(BitConverter.GetBytes((short)(numBytes)), 0, 2);
+            stream.Write(BitConverter.GetBytes((short)(numBits)), 0, 2);
+            stream.Write(System.Text.Encoding.UTF8.GetBytes("data"), 0, 4);
+            stream.Write(BitConverter.GetBytes(0), 0, 4);
 
             this.duration = new TimeSpan(0);
 
@@ -302,5 +319,6 @@ namespace WPCordovaClassLib.Cordova.UI
                 dtXna = null;
             }
         }
+
     }
 }
