@@ -579,12 +579,17 @@ namespace WPCordovaClassLib.Cordova.Commands
         /// <returns></returns>
         private void SaveAudioClipToLocalStorage()
         {
-            if (this.memoryStream == null || this.memoryStream.Length <= 0)
+            if (memoryStream == null || memoryStream.Length <= 0)
             {
                 return;
             }
 
-            this.memoryStream.UpdateWavStream();
+            long position = memoryStream.Position;
+            memoryStream.Seek(4, SeekOrigin.Begin);
+            memoryStream.Write(BitConverter.GetBytes((int)memoryStream.Length - 8), 0, 4);
+            memoryStream.Seek(40, SeekOrigin.Begin);
+            memoryStream.Write(BitConverter.GetBytes((int)memoryStream.Length - 44), 0, 4);
+            memoryStream.Seek(position, SeekOrigin.Begin);
 
             try
             {
