@@ -80,14 +80,14 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\templates\standalone\cordovalib\BaseCommand.cs">
+      <Link>CordovaLib\BaseCommand.cs</Link>
+    </Compile>
     <Compile Include="..\templates\standalone\cordovalib\BrowserMouseHelper.cs">
       <Link>CordovaLib\BrowserMouseHelper.cs</Link>
     </Compile>
     <Compile Include="..\templates\standalone\cordovalib\CommandFactory.cs">
       <Link>CordovaLib\CommandFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\templates\standalone\cordovalib\Commands\BaseCommand.cs">
-      <Link>CordovaLib\Commands\BaseCommand.cs</Link>
     </Compile>
     <Compile Include="..\templates\standalone\cordovalib\ConfigHandler.cs">
       <Link>CordovaLib\ConfigHandler.cs</Link>
@@ -101,6 +101,9 @@
     </Compile>
     <Compile Include="..\templates\standalone\cordovalib\DOMStorageHelper.cs">
       <Link>CordovaLib\DOMStorageHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\templates\standalone\cordovalib\ImageExifHelper.cs">
+      <Link>CordovaLib\ImageExifHelper.cs</Link>
     </Compile>
     <Compile Include="..\templates\standalone\cordovalib\JSON\JsonHelper.cs">
       <Link>CordovaLib\JSON\JsonHelper.cs</Link>
@@ -158,9 +161,6 @@
     </Compile>
     <Compile Include="..\templates\standalone\Plugins\Globalization.cs">
       <Link>CordovaLib\Plugins\Globalization.cs</Link>
-    </Compile>
-    <Compile Include="..\templates\standalone\Plugins\ImageExifHelper.cs">
-      <Link>CordovaLib\Plugins\ImageExifHelper.cs</Link>
     </Compile>
     <Compile Include="..\templates\standalone\Plugins\InAppBrowser.cs">
       <Link>CordovaLib\Plugins\InAppBrowser.cs</Link>
