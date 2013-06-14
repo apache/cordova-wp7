@@ -98,6 +98,10 @@
     <Compile Include="cordovalib\OrientationHelper.cs" />
     <Compile Include="cordovalib\PluginResult.cs" />
     <Compile Include="cordovalib\ScriptCallback.cs" />
+    <Compile Include="cordovalib\MimeTypeMapper.cs" />
+    <Compile Include="cordovalib\NetworkStatus.cs" />
+    <Compile Include="cordovalib\Device.cs" />
+    <Compile Include="cordovalib\ImageExifHelper.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -167,23 +171,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Plugins\Accelerometer.cs" />
-    <Compile Include="Plugins\AudioFormatsHelper.cs" />
     <Compile Include="Plugins\AudioPlayer.cs" />
     <Compile Include="Plugins\Battery.cs" />
     <Compile Include="Plugins\Camera.cs" />
     <Compile Include="Plugins\Compass.cs" />
     <Compile Include="Plugins\Contacts.cs" />
     <Compile Include="Plugins\DebugConsole.cs" />
-    <Compile Include="Plugins\Device.cs" />
     <Compile Include="Plugins\File.cs" />
     <Compile Include="Plugins\FileTransfer.cs" />
     <Compile Include="Plugins\GeoLocation.cs" />
     <Compile Include="Plugins\Globalization.cs" />
-    <Compile Include="Plugins\ImageExifHelper.cs" />
     <Compile Include="Plugins\InAppBrowser.cs" />
     <Compile Include="Plugins\Media.cs" />
-    <Compile Include="Plugins\MimeTypeMapper.cs" />
-    <Compile Include="Plugins\NetworkStatus.cs" />
     <Compile Include="Plugins\Notification.cs" />
     <Compile Include="Plugins\UI\AudioCaptureTask.cs" />
     <Compile Include="Plugins\UI\AudioRecorder.xaml.cs" >
