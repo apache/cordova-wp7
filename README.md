@@ -1,3 +1,6 @@
+###Project has been merged into the [cordova-wp8](https://github.com/apache/cordova-wp8) repository for now.
+
+
 Apache Cordova for Windows Phone 7
 ===
 
